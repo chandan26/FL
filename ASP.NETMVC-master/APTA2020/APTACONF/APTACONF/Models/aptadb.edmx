@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="aptadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="authortable">
+          <Key>
+            <PropertyRef Name="authorid" />
+          </Key>
+          <Property Name="authorid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="lname" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="degree" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="registrationdate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="conferencetable">
+          <Key>
+            <PropertyRef Name="conferenceid" />
+          </Key>
+          <Property Name="conferenceid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="conferencetitle" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="keynotespeaker" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="conferencedate" Type="date" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="guesttable">
+          <Key>
+            <PropertyRef Name="guestid" />
+          </Key>
+          <Property Name="guestid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contact" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="registrationDate" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="papertable">
+          <Key>
+            <PropertyRef Name="paperid" />
+          </Key>
+          <Property Name="paperid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="papertitle" Type="varchar" MaxLength="250" />
+          <Property Name="papertype" Type="varchar" MaxLength="75" />
+          <Property Name="authorid" Type="int" />
+          <Property Name="conferenceid" Type="int" />
+          <Property Name="papersize" Type="varchar" MaxLength="75" />
+          <Property Name="submissiondate" Type="date" />
+        </EntityType>
+        <EntityType Name="reservationtable">
+          <Key>
+            <PropertyRef Name="reservationID" />
+          </Key>
+          <Property Name="reservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="conferenceid" Type="int" Nullable="false" />
+          <Property Name="guestid" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_papertable_authortable">
+          <End Role="authortable" Type="Self.authortable" Multiplicity="0..1" />
+          <End Role="papertable" Type="Self.papertable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authortable">
+              <PropertyRef Name="authorid" />
+            </Principal>
+            <Dependent Role="papertable">
+              <PropertyRef Name="authorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_papertable_conferencetable">
+          <End Role="conferencetable" Type="Self.conferencetable" Multiplicity="0..1" />
+          <End Role="papertable" Type="Self.papertable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="conferencetable">
+              <PropertyRef Name="conferenceid" />
+            </Principal>
+            <Dependent Role="papertable">
+              <PropertyRef Name="conferenceid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reservationtable_conferencetable">
+          <End Role="conferencetable" Type="Self.conferencetable" Multiplicity="1" />
+          <End Role="reservationtable" Type="Self.reservationtable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="conferencetable">
+              <PropertyRef Name="conferenceid" />
+            </Principal>
+            <Dependent Role="reservationtable">
+              <PropertyRef Name="conferenceid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reservationtable_guesttable">
+          <End Role="guesttable" Type="Self.guesttable" Multiplicity="1" />
+          <End Role="reservationtable" Type="Self.reservationtable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="guesttable">
+              <PropertyRef Name="guestid" />
+            </Principal>
+            <Dependent Role="reservationtable">
+              <PropertyRef Name="guestid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="aptadbModelStoreContainer">
+          <EntitySet Name="authortable" EntityType="Self.authortable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="conferencetable" EntityType="Self.conferencetable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="guesttable" EntityType="Self.guesttable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="papertable" EntityType="Self.papertable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reservationtable" EntityType="Self.reservationtable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_papertable_authortable" Association="Self.FK_papertable_authortable">
+            <End Role="authortable" EntitySet="authortable" />
+            <End Role="papertable" EntitySet="papertable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_papertable_conferencetable" Association="Self.FK_papertable_conferencetable">
+            <End Role="conferencetable" EntitySet="conferencetable" />
+            <End Role="papertable" EntitySet="papertable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reservationtable_conferencetable" Association="Self.FK_reservationtable_conferencetable">
+            <End Role="conferencetable" EntitySet="conferencetable" />
+            <End Role="reservationtable" EntitySet="reservationtable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reservationtable_guesttable" Association="Self.FK_reservationtable_guesttable">
+            <End Role="guesttable" EntitySet="guesttable" />
+            <End Role="reservationtable" EntitySet="reservationtable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="aptadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="authortable">
+          <Key>
+            <PropertyRef Name="authorid" />
+          </Key>
+          <Property Name="authorid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="degree" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="registrationdate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="papertable" Relationship="Self.FK_papertable_authortable" FromRole="authortable" ToRole="papertable" />
+        </EntityType>
+        <EntityType Name="conferencetable">
+          <Key>
+            <PropertyRef Name="conferenceid" />
+          </Key>
+          <Property Name="conferenceid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="conferencetitle" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="keynotespeaker" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conferencedate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="reservationtable" Relationship="aptadbModel.FK_reservationtable_conferencetable" FromRole="conferencetable" ToRole="reservationtable" />
+          <NavigationProperty Name="papertable" Relationship="aptadbModel.FK_papertable_conferencetable" FromRole="conferencetable" ToRole="papertable" />
+        </EntityType>
+        <EntityType Name="guesttable">
+          <Key>
+            <PropertyRef Name="guestid" />
+          </Key>
+          <Property Name="guestid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="registrationDate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="reservationtable" Relationship="Self.FK_reservationtable_guesttable" FromRole="guesttable" ToRole="reservationtable" />
+        </EntityType>
+        <EntityType Name="papertable">
+          <Key>
+            <PropertyRef Name="paperid" />
+          </Key>
+          <Property Name="paperid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="papertitle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="papertype" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="authorid" Type="Int32" />
+          <Property Name="conferenceid" Type="Int32" />
+          <Property Name="papersize" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="submissiondate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="authortable" Relationship="Self.FK_papertable_authortable" FromRole="papertable" ToRole="authortable" />
+          <NavigationProperty Name="conferencetable" Relationship="aptadbModel.FK_papertable_conferencetable" FromRole="papertable" ToRole="conferencetable" />
+        </EntityType>
+        <EntityType Name="reservationtable">
+          <Key>
+            <PropertyRef Name="reservationID" />
+          </Key>
+          <Property Name="reservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="conferenceid" Type="Int32" Nullable="false" />
+          <Property Name="guestid" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="guesttable" Relationship="Self.FK_reservationtable_guesttable" FromRole="reservationtable" ToRole="guesttable" />
+          <NavigationProperty Name="conferencetable" Relationship="aptadbModel.FK_reservationtable_conferencetable" FromRole="reservationtable" ToRole="conferencetable" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_papertable_authortable">
+          <End Role="authortable" Type="Self.authortable" Multiplicity="0..1" />
+          <End Role="papertable" Type="Self.papertable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authortable">
+              <PropertyRef Name="authorid" />
+            </Principal>
+            <Dependent Role="papertable">
+              <PropertyRef Name="authorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reservationtable_guesttable">
+          <End Role="guesttable" Type="Self.guesttable" Multiplicity="1" />
+          <End Role="reservationtable" Type="Self.reservationtable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="guesttable">
+              <PropertyRef Name="guestid" />
+            </Principal>
+            <Dependent Role="reservationtable">
+              <PropertyRef Name="guestid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="aptadbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="authortable" EntityType="Self.authortable" />
+          <EntitySet Name="conferencetable" EntityType="Self.conferencetable" />
+          <EntitySet Name="guesttable" EntityType="Self.guesttable" />
+          <EntitySet Name="papertable" EntityType="Self.papertable" />
+          <EntitySet Name="reservationtable" EntityType="Self.reservationtable" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_papertable_authortable" Association="Self.FK_papertable_authortable">
+            <End Role="authortable" EntitySet="authortable" />
+            <End Role="papertable" EntitySet="papertable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reservationtable_guesttable" Association="Self.FK_reservationtable_guesttable">
+            <End Role="guesttable" EntitySet="guesttable" />
+            <End Role="reservationtable" EntitySet="reservationtable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reservationtable_conferencetable" Association="aptadbModel.FK_reservationtable_conferencetable">
+            <End Role="conferencetable" EntitySet="conferencetable" />
+            <End Role="reservationtable" EntitySet="reservationtable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_papertable_conferencetable" Association="aptadbModel.FK_papertable_conferencetable">
+            <End Role="conferencetable" EntitySet="conferencetable" />
+            <End Role="papertable" EntitySet="papertable" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_reservationtable_conferencetable">
+          <End Type="aptadbModel.conferencetable" Role="conferencetable" Multiplicity="1" />
+          <End Type="aptadbModel.reservationtable" Role="reservationtable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="conferencetable">
+              <PropertyRef Name="conferenceid" />
+            </Principal>
+            <Dependent Role="reservationtable">
+              <PropertyRef Name="conferenceid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_papertable_conferencetable">
+          <End Type="aptadbModel.conferencetable" Role="conferencetable" Multiplicity="0..1" />
+          <End Type="aptadbModel.papertable" Role="papertable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="conferencetable">
+              <PropertyRef Name="conferenceid" />
+            </Principal>
+            <Dependent Role="papertable">
+              <PropertyRef Name="conferenceid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="aptadbModelStoreContainer" CdmEntityContainer="aptadbEntities">
+          <EntitySetMapping Name="authortable">
+            <EntityTypeMapping TypeName="aptadbModel.authortable">
+              <MappingFragment StoreEntitySet="authortable">
+                <ScalarProperty Name="authorid" ColumnName="authorid" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="degree" ColumnName="degree" />
+                <ScalarProperty Name="registrationdate" ColumnName="registrationdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="conferencetable">
+            <EntityTypeMapping TypeName="aptadbModel.conferencetable">
+              <MappingFragment StoreEntitySet="conferencetable">
+                <ScalarProperty Name="conferenceid" ColumnName="conferenceid" />
+                <ScalarProperty Name="conferencetitle" ColumnName="conferencetitle" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="keynotespeaker" ColumnName="keynotespeaker" />
+                <ScalarProperty Name="conferencedate" ColumnName="conferencedate" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="guesttable">
+            <EntityTypeMapping TypeName="aptadbModel.guesttable">
+              <MappingFragment StoreEntitySet="guesttable">
+                <ScalarProperty Name="guestid" ColumnName="guestid" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="registrationDate" ColumnName="registrationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="papertable">
+            <EntityTypeMapping TypeName="aptadbModel.papertable">
+              <MappingFragment StoreEntitySet="papertable">
+                <ScalarProperty Name="paperid" ColumnName="paperid" />
+                <ScalarProperty Name="papertitle" ColumnName="papertitle" />
+                <ScalarProperty Name="papertype" ColumnName="papertype" />
+                <ScalarProperty Name="authorid" ColumnName="authorid" />
+                <ScalarProperty Name="conferenceid" ColumnName="conferenceid" />
+                <ScalarProperty Name="papersize" ColumnName="papersize" />
+                <ScalarProperty Name="submissiondate" ColumnName="submissiondate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservationtable">
+            <EntityTypeMapping TypeName="aptadbModel.reservationtable">
+              <MappingFragment StoreEntitySet="reservationtable">
+                <ScalarProperty Name="reservationID" ColumnName="reservationID" />
+                <ScalarProperty Name="conferenceid" ColumnName="conferenceid" />
+                <ScalarProperty Name="guestid" ColumnName="guestid" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="aptadbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

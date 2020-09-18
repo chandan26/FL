@@ -1,0 +1,51 @@
+﻿@model IEnumerable<APTACONF.Models.reservationtable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Over View of Reservations</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.reservationID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.conferenceid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.guestid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.reservationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.conferenceid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.guestid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.reservationID /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { id = item.reservationID/* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.reservationID/* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

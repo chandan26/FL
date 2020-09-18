@@ -1,0 +1,63 @@
+﻿@model IEnumerable<APTACONF.Models.conferencetable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>OverView of Confernces</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.conferenceid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.conferencetitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.keynotespeaker)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.conferencedate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.conferenceid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.conferencetitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.keynotespeaker)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.conferencedate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.conferenceid /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { id = item.conferenceid/* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.conferenceid/* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

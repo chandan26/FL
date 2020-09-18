@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1484703041c84f1caa24d28933cef4a3" Name="Diagram1">
+        <EntityTypeShape EntityType="aptadbModel.authortable" Width="1.5" PointX="0.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="aptadbModel.conferencetable" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="aptadbModel.guesttable" Width="1.5" PointX="4.375" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="aptadbModel.papertable" Width="1.5" PointX="3.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="aptadbModel.reservationtable" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="aptadbModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="aptadbModel.FK_papertable_authortable" ManuallyRouted="false" />
+        <AssociationConnector Association="aptadbModel.FK_reservationtable_guesttable" ManuallyRouted="false" />
+        <AssociationConnector Association="aptadbModel.FK_reservationtable_conferencetable" />
+        <AssociationConnector Association="aptadbModel.FK_papertable_conferencetable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

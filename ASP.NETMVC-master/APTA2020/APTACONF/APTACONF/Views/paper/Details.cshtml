@@ -1,0 +1,74 @@
+﻿@model APTACONF.Models.papertable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Paper Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.paperid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paperid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.papertitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.papertitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.papertype)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.papertype)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.authorid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.authorid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conferenceid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conferenceid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.papersize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.papersize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.submissiondate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.submissiondate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

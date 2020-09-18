@@ -1,0 +1,69 @@
+﻿@model IEnumerable<APTACONF.Models.papertable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.paperid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.papertitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.papertype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.authorid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.conferenceid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.papersize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.submissiondate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.paperid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.papertitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.papertype)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.authorid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.conferenceid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.papersize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.submissiondate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.paperid /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { id = item.paperid /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.paperid /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
